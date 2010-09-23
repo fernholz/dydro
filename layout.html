@@ -1,0 +1,182 @@
+<html>
+<head>
+	<link rel=stylesheet href="style.css" type="text/css" media=screen>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//initialize data on the containers on load indicitive of state
+			$('.container').data('userState', 'normal');
+			$('.container').data('systemState', 'normal');
+			
+			//container sizing element event handling
+			$('.maximize-container').live('click', function(e){
+				var container = $(this).parents('.container').filter(':first');
+				container.data('userState', 'maximized');
+				container.find('.add-container').show();
+				var height = determineMaxHeight(container);
+				container.css({
+					'height': height
+				});
+				e.preventDefault();
+				return false;
+			});
+			
+			$('.minimize-container').live('click', function(e){
+				var container = $(this).parents('.container').filter(':first');
+				container.data('userState', 'minimized');
+				container.find('.add-container').hide();
+				var height = determineMinHeight(container);
+				container.css({
+					'height': height
+				});
+				e.preventDefault();
+				return false;
+			});
+			$('.restore-container').live('click', function(e){
+				var container = $(this).parents('.container').filter(':first');
+				container.data('userState', 'normal');
+				container.find('.add-container').show();
+				var height = determineOriginalHeight(container);
+				container.css({
+					'height': height
+				});
+				e.preventDefault();
+				return false;
+			});
+			
+			//add functionality
+			$('.add').live('click', function(e){
+				var newContainer = '<div class="container"><div class="right"><a href="" class="add-container link-no-style">+</a><div class="task-options hidden"><div class="red color-option"></div><div class="green color-option"></div><div class="blue color-option"></div></div></div><div class="container-resize-options"><a href="" class="maximize-container link-no-style">+</a><a href="" class="minimize-container link-no-style">-</a><a href="" class="restore-container link-no-style">&#9776;</a></div></div>';
+				if($(".container").length){
+					$(newContainer).insertAfter($('#wrapper').find('.container:last'));
+				}
+				else{
+					$('.left').append(newContainer);	
+				}
+				e.preventDefault();
+				return false;
+			});
+			
+			$('.add-container').live('click', function(e){
+				var container = $(this).parents('.container').filter(':first');
+				container.find('.task-options').toggle();
+				e.preventDefault();
+				return false;
+			});
+			$('.color-option').live('click', function(e){
+				var container = $(this).parents('.container').filter(':first');
+				var color = $(this).attr('class');
+				var newTask = "<div class='task " + color + "'></div>";
+				if(container.find('.task').size > 0){
+					$(newTask).insertAfter(container.find('.task:last'));
+				}
+				else{
+					$(container).append(newTask);
+				}
+				e.preventDefault();
+				return false;
+			});
+		});
+		
+		function determineMaxHeight(elem){
+			var width = elem.innerWidth();
+			var numTasks = elem.children('.task').size();
+			var taskWidth = $('.task').outerWidth(true);
+			var tasksWide = Math.floor(width / taskWidth);
+			var height = Math.ceil(numTasks / tasksWide);
+			height = (taskWidth + 10) * height;
+			return height + 'px';
+		}
+		function determineOriginalHeight(elem){
+			var taskWidth = $('.task').outerWidth(true);
+			var height = taskWidth + 10;
+			return height + 'px';
+		}
+		function determineMinHeight(elem){
+			return 30 + 'px';
+		}
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="main" class="clearfix">
+			<div id="header">
+				<div id="header-inner">
+					<h1 id="logo">scrum.ly</h1>
+					<ul id="nav">
+						<li><a href="">Username</a></li>
+						<li><a href="">Help</a></li>
+						<li><a href="">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="content">
+				<div id="content-inner" class="shadow">
+					<div class="left">
+						<h1>Project Name</h1>
+						<div class="container">
+							<div class="buffer right"></div>
+							<div class="right">
+								<a href="" class="add-container link-no-style">+</a>
+								<div class="task-options hidden">
+									<div class="red color-option"></div>
+									<div class="green color-option"></div>
+									<div class="blue color-option"></div>
+								</div>
+							</div>
+							<div class="task red"></div>
+							<div class="task green"></div>
+							<div class="task blue"></div>
+							<div class="task green"></div>
+							<div class="task red"></div>
+							<div class="container-resize-options">
+								<a href="" class="maximize-container link-no-style">+</a>
+								<a href="" class="minimize-container link-no-style">-</a>
+								<a href="" class="restore-container link-no-style">&#9776;</a>
+							</div>
+						</div>
+						<div class="container">
+							<div class="buffer right"></div>
+							<div class="right">
+								<a href="" class="add-container link-no-style">+</a>
+								<div class="task-options hidden">
+									<div class="red color-option"></div>
+									<div class="green color-option"></div>
+									<div class="blue color-option"></div>
+								</div>
+							</div>
+							<div class="task green"></div>
+							<div class="task red"></div>
+							<div class="task green"></div>
+							<div class="task blue"></div>
+							<div class="task blue"></div>
+							<div class="task green"></div>
+							<div class="task red"></div>
+							<div class="task green"></div>
+							<div class="task blue"></div>
+							<div class="task blue"></div>
+							<div class="task green"></div>
+							<div class="task red"></div>
+							<div class="task green"></div>
+							<div class="task blue"></div>
+							<div class="task blue"></div>
+							<div class="container-resize-options">
+								<a href="" class="maximize-container link-no-style">+</a>
+								<a href="" class="minimize-container link-no-style">-</a>
+								<a href="" class="restore-container link-no-style">&#9776;</a>
+							</div>
+						</div>
+					</div>
+					<div class="right"><a href="" class="add link-no-style">+</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<div id="footer-inner">
+			<p>&copy;2010 - Dydro Inc.</p>
+		</div>
+	</div>
+</body>
+</html>
