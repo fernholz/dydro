@@ -52,7 +52,7 @@
 					$(newContainer).insertAfter($('#wrapper').find('.container:last'));
 				}
 				else{
-					$('.left').append(newContainer);	
+					$('#content-inner').append(newContainer);	
 				}
 				e.preventDefault();
 				return false;
@@ -113,61 +113,10 @@
 			</div>
 			<div id="content">
 				<div id="content-inner" class="shadow">
-					<div class="left">
-						<h1>Project Name</h1>
-						<div class="container">
-							<div class="buffer right"></div>
-							<div class="right">
-								<a href="" class="add-container link-no-style">+</a>
-								<div class="task-options hidden">
-									<div class="red color-option"></div>
-									<div class="green color-option"></div>
-									<div class="blue color-option"></div>
-								</div>
-							</div>
-							<div class="task red"></div>
-							<div class="task green"></div>
-							<div class="task blue"></div>
-							<div class="task green"></div>
-							<div class="task red"></div>
-							<div class="container-resize-options">
-								<a href="" class="maximize-container link-no-style">+</a>
-								<a href="" class="minimize-container link-no-style">-</a>
-								<a href="" class="restore-container link-no-style">&#9776;</a>
-							</div>
-						</div>
-						<div class="container">
-							<div class="buffer right"></div>
-							<div class="right">
-								<a href="" class="add-container link-no-style">+</a>
-								<div class="task-options hidden">
-									<div class="red color-option"></div>
-									<div class="green color-option"></div>
-									<div class="blue color-option"></div>
-								</div>
-							</div>
-							<div class="task green"></div>
-							<div class="task red"></div>
-							<div class="task green"></div>
-							<div class="task blue"></div>
-							<div class="task blue"></div>
-							<div class="task green"></div>
-							<div class="task red"></div>
-							<div class="task green"></div>
-							<div class="task blue"></div>
-							<div class="task blue"></div>
-							<div class="task green"></div>
-							<div class="task red"></div>
-							<div class="task green"></div>
-							<div class="task blue"></div>
-							<div class="task blue"></div>
-							<div class="container-resize-options">
-								<a href="" class="maximize-container link-no-style">+</a>
-								<a href="" class="minimize-container link-no-style">-</a>
-								<a href="" class="restore-container link-no-style">&#9776;</a>
-							</div>
-						</div>
-					</div>
+					
+						<h1 class='project-heading'>Project Name</h1>
+						
+						
 					<div class="right"><a href="" class="add link-no-style">+</a></div>
 				</div>
 			</div>
