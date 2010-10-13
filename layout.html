@@ -1,7 +1,13 @@
 <html>
 <head>
 	<link rel=stylesheet href="style.css" type="text/css" media=screen>
+	<!-- IE 6 "fixes" -->
+	<!--[if lt IE 7]>
+	<link type='text/css' href='css/basic_ie.css' rel='stylesheet' media='screen' />
+	<![endif]-->
+	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://simplemodal.googlecode.com/files/jquery.simplemodal-1.3.5.min.js"></script>
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -47,7 +53,7 @@
 			
 			//add functionality
 			$('.add').live('click', function(e){
-				var newContainer = '<div class="container"><div class="right"><a href="" class="add-container link-no-style">+</a><div class="task-options hidden"><div class="red color-option"></div><div class="green color-option"></div><div class="blue color-option"></div></div></div><div class="container-resize-options"><a href="" class="maximize-container link-no-style">+</a><a href="" class="minimize-container link-no-style">-</a><a href="" class="restore-container link-no-style">&#9776;</a></div></div>';
+				var newContainer = '<div class="container"><div class="right"><a href="" class="add-container link-no-style">+</a></div><div class="container-resize-options"><a href="" class="maximize-container link-no-style">+</a><a href="" class="minimize-container link-no-style">-</a><a href="" class="restore-container link-no-style">&#9776;</a></div></div>';
 				if($(".container").length){
 					$(newContainer).insertAfter($('#wrapper').find('.container:last'));
 				}
@@ -60,24 +66,80 @@
 			
 			$('.add-container').live('click', function(e){
 				var container = $(this).parents('.container').filter(':first');
-				container.find('.task-options').toggle();
+				//container.find('.task-options').toggle();
+				console.log($(this).parents().find('.container:first'));
+				$('#newTaskModal').data('parent', $(this).parents().find('.container:first'));
+				$('#newTaskModal').modal({
+					onOpen: unFocus(),
+				});
 				e.preventDefault();
 				return false;
 			});
 			$('.color-option').live('click', function(e){
-				var container = $(this).parents('.container').filter(':first');
-				var color = $(this).attr('class');
-				var newTask = "<div class='task " + color + "'></div>";
-				if(container.find('.task').size > 0){
-					$(newTask).insertAfter(container.find('.task:last'));
+				$('.color-option').removeClass('shadow');
+				$(this).addClass('shadow').css({'color' : '#bbbbbb'})
+				e.preventDefault();
+				return false;
+			});
+			
+			$("input[name$='taskTitle']").focus(function(){
+				if($(this).val() == 'Task Title'){
+					$(this).val('');
 				}
-				else{
-					$(container).append(newTask);
+			});
+			$("input[name$='taskTitle']").blur(function(){
+				if($(this).val() == ''){
+					$(this).val('Task Title');
 				}
+			});
+			
+			$("textarea[name$='taskDescription']").focus(function(){
+				if($(this).val() == 'Task Description'){
+					$(this).val('');
+				}
+			});
+			$("textarea[name$='taskDescription']").blur(function(){
+				if($(this).val() == ''){
+					$(this).val('Task Description');
+				}
+			});
+			
+			$("input[name$='taskAssignee']").focus(function(){
+				if($(this).val() == 'Assigned To'){
+					$(this).val('');
+				}
+			});
+			$("input[name$='taskAssignee']").blur(function(){
+				if($(this).val() == ''){
+					$(this).val('Assigned To');
+				}
+			});
+			
+			$("input[name$='createTask']").click(function(e){
+				var title = $("input[name$='taskTitle']").val();
+				var description = $("textarea[name$='taskDescription']").val();
+				var assignee = $("input[name$='taskAssignee']").val();
+				var color;
+				$(".color-option").each(function(){
+					//console.log($(this));
+					if($(this).hasClass('shadow')){
+						color = $(this).attr('class');
+						color = color.split(' ');
+						color = color[0];
+					}
+				});
+				
+				console.log($('#newTaskModal').data('parent'));
+				insertNewTask($('#newTaskModal').data('parent'), color, title, description, assignee);
+				
 				e.preventDefault();
 				return false;
 			});
 		});
+		
+		function unFocus(){
+			$("input:text:visible:first").blur();
+		}
 		
 		function determineMaxHeight(elem){
 			var width = elem.innerWidth();
@@ -96,9 +158,41 @@
 		function determineMinHeight(elem){
 			return 30 + 'px';
 		}
+		
+		function insertNewTask(parent, color, title, description, assignee){
+			var task = "<div class=\"" + color + " task\">";
+			task += "<p class=\"taskTitle\">" + title + "</p>";
+			task += "<p class=\"taskDescription\">" + description + "</p>";
+			task += "<p class=\"taskAssignee\">" + assignee + "</p>";
+			task += "</div>";
+			$.modal.close();
+			parent.append(task);
+		}
 	</script>
 </head>
 <body>
+	<div id="newTaskModal" class="hidden">
+		<h1>New Task Creation</h1>
+		<form action="#" id="newTaskForm">
+			<p>
+				<input type="text" name="taskTitle" value="Task Title"/>
+			</p>
+			<p>
+				<textarea name="taskDescription">Task Description</textarea>
+			</p>
+			<p>
+				<input type="text" name="taskAssignee" value="Assigned To"/>
+			</p>
+			<div class="full-width color-options">
+				<div class="red color-option left"></div>
+				<div class="green color-option left"></div>
+				<div class="blue color-option left"></div>
+			</div>
+			<p>
+				<input type="submit" value="Create" name="createTask"/>
+			</p>
+		</form>
+	</div>
 	<div id="wrapper">
 		<div id="main" class="clearfix">
 			<div id="header">
@@ -115,7 +209,6 @@
 				<div id="content-inner" class="shadow">
 					
 						<h1 class='project-heading'>Project Name</h1>
-						
 						
 					<div class="right"><a href="" class="add link-no-style">+</a></div>
 				</div>

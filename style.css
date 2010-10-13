@@ -119,6 +119,14 @@ body{
 					margin: 10px 0 0 10px;
 					width: 180px;
 				}
+					.taskTitle, .taskDescription, .taskAssignee{
+						color: #eaeaea;
+						font-family: "Lucida Grande";
+						font-size: 1.4em;
+						line-height: 1.5em;
+						padding: 5px;
+						width: 100%;
+					}
 			.add{
 				font-size: 2.2em;
 				position: absolute;
@@ -132,6 +140,41 @@ body{
 				right: 5px;
 				top: 5px;
 			}
+			#newTaskModal h1{
+				margin-left: 30px;
+			}
+			#newTaskForm{
+				float: right;
+				font-family: "Lucida Grande";
+				margin-right: 30px;
+				width: 300px;
+			}
+				.color-options{
+					height: 32px;
+					float: left !important;
+				}
+				#newTaskForm input[type=text]{
+					font-size: 2em;
+					height: 32px;
+					line-height: 32px;
+					margin-bottom: 10px;
+					width: 100%;
+				}
+				#newTaskForm textarea{
+					font-family: inherit;
+					font-size: 2em;
+					height: 64px;
+					margin-bottom: 10px;
+					padding: 2px;
+					width: 100%;
+				}
+				#newTaskForm input[type=submit]{
+					float: right;
+					font-size: 2em;
+					height: 32px;
+					line-height: 32px;
+					margin-bottom: 10px;
+				}
 #footer{
 	background: #333333;
 	color: #eaeaea;
@@ -167,6 +210,9 @@ a.link-no-style, a.link-no-style:visited, a.link-no-style:active, a.link-no-styl
 }
 .blue{
 	background: #0000ff;
+}
+.full-width{
+	width: 100%;
 }
 .hidden{
 	display: none;
@@ -221,3 +267,17 @@ body > #wrapper {height: auto; min-height: 100%;}
 * html .clearfix { height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+
+/* Simple Modal Stylings */
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#simplemodal-container {height:320px; width:600px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:url(images/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container #basic-modal-content {padding:8px;}
+
+/* End Simple Modal Stylings */
