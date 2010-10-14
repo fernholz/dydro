@@ -67,8 +67,7 @@
 			$('.add-container').live('click', function(e){
 				var container = $(this).parents('.container').filter(':first');
 				//container.find('.task-options').toggle();
-				console.log($(this).parents().find('.container:first'));
-				$('#newTaskModal').data('parent', $(this).parents().find('.container:first'));
+				$('#newTaskModal').data('parent', $(this).parent().parent('.container'));
 				$('#newTaskModal').modal({
 					onOpen: unFocus(),
 				});
@@ -121,7 +120,6 @@
 				var assignee = $("input[name$='taskAssignee']").val();
 				var color;
 				$(".color-option").each(function(){
-					//console.log($(this));
 					if($(this).hasClass('shadow')){
 						color = $(this).attr('class');
 						color = color.split(' ');
@@ -129,7 +127,6 @@
 					}
 				});
 				
-				console.log($('#newTaskModal').data('parent'));
 				insertNewTask($('#newTaskModal').data('parent'), color, title, description, assignee);
 				
 				e.preventDefault();
